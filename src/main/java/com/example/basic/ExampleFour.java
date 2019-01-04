@@ -14,7 +14,8 @@ public class ExampleFour {
 
   LogService getLogService() {
     // use PlainLogger if none or more than one available.
-    return logService.getIfUnique(PlainLogger::new);
+    return logService.getIfAvailable(PlainLogger::new);
+//    return logService.getIfUnique(PlainLogger::new);
   }
 
   public void runApps() {

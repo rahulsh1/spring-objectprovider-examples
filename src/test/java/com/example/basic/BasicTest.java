@@ -22,7 +22,6 @@ public class BasicTest {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
       context.register(ExampleOne.class);
       context.refresh();
-      context.start();
 
       ExampleOne example = context.getBean(ExampleOne.class);
       example.runApps();
@@ -34,7 +33,6 @@ public class BasicTest {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
       context.register(ExampleTwo.class);
       context.refresh();
-      context.start();
 
       ExampleTwo example = context.getBean(ExampleTwo.class);
       assertEquals(0, example.numDependencies());
@@ -47,7 +45,6 @@ public class BasicTest {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
       context.register(ExampleTwo.class, PlainLogger.class);
       context.refresh();
-      context.start();
 
       ExampleTwo example = context.getBean(ExampleTwo.class);
       assertEquals(1, example.numDependencies());
@@ -60,7 +57,6 @@ public class BasicTest {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
       context.register(ExampleTwo.class, PlainLogger.class, JsonLogger.class);
       context.refresh();
-      context.start();
 
       ExampleTwo example = context.getBean(ExampleTwo.class);
       example.runApps();
@@ -72,7 +68,6 @@ public class BasicTest {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
       context.register(ExampleThree.class, PlainLogger.class, JsonLogger.class);
       context.refresh();
-      context.start();
 
       ExampleThree example = context.getBean(ExampleThree.class);
       assertEquals(2, example.numDependencies());
@@ -85,7 +80,6 @@ public class BasicTest {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
       context.register(ExampleThree.class);
       context.refresh();
-      context.start();
 
       ExampleThree example = context.getBean(ExampleThree.class);
       assertEquals(0, example.numDependencies());
@@ -98,7 +92,6 @@ public class BasicTest {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
       context.register(ExampleFour.class);
       context.refresh();
-      context.start();
 
       ExampleFour example = context.getBean(ExampleFour.class);
       assertEquals(0, example.numDependencies());
@@ -111,7 +104,6 @@ public class BasicTest {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
       context.register(ExampleFour.class, JsonLogger.class);
       context.refresh();
-      context.start();
 
       ExampleFour example = context.getBean(ExampleFour.class);
       assertEquals(1, example.numDependencies());
@@ -124,11 +116,33 @@ public class BasicTest {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
       context.register(ExampleFour.class, PlainLogger.class, JsonLogger.class);
       context.refresh();
-      context.start();
 
       ExampleFour example = context.getBean(ExampleFour.class);
       assertEquals(2, example.numDependencies());
       example.getLogService().log("Hello Logger");
+      example.runApps();
+    }
+  }
+
+  @Test
+  public void testExampleFiveWithNoLoggers() {
+    try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
+      context.register(ExampleFive.class);
+      context.refresh();
+
+      ExampleFive example = context.getBean(ExampleFive.class);
+      assertEquals(0, example.numDependencies());
+      example.runApps();
+    }
+  }
+
+  @Test
+  public void testExampleFiveWithOneLogger() {
+    try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
+      context.register(ExampleFive.class, JsonLogger.class);
+      context.refresh();
+
+      ExampleFive example = context.getBean(ExampleFive.class);
       example.runApps();
     }
   }
