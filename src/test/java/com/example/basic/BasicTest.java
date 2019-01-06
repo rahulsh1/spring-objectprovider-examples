@@ -95,7 +95,7 @@ public class BasicTest {
 
       ExampleFour example = context.getBean(ExampleFour.class);
       assertEquals(0, example.numDependencies());
-      example.getLogService().log("Hello Logger");
+      example.runApps();
     }
   }
 
@@ -107,7 +107,7 @@ public class BasicTest {
 
       ExampleFour example = context.getBean(ExampleFour.class);
       assertEquals(1, example.numDependencies());
-      example.getLogService().log("Hello Logger");
+      example.runApps();
     }
   }
 
@@ -119,7 +119,6 @@ public class BasicTest {
 
       ExampleFour example = context.getBean(ExampleFour.class);
       assertEquals(2, example.numDependencies());
-      example.getLogService().log("Hello Logger");
       example.runApps();
     }
   }

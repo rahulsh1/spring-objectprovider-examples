@@ -13,13 +13,14 @@ public class ExampleFour {
   }
 
   LogService getLogService() {
-    // use PlainLogger if none or more than one available.
-    return logService.getIfAvailable(PlainLogger::new);
-//    return logService.getIfUnique(PlainLogger::new);
+    // use PlainLogger as fallback.
+    // Note: getIfAvailable wont work for multiple dependencies
+//    return logService.getIfAvailable(PlainLogger::new);
+    return logService.getIfUnique(PlainLogger::new);
   }
 
   public void runApps() {
-    logService.stream().forEach(e -> e.log("some app data with " + getClass().getSimpleName()));
+    getLogService().log("some app data with " + getClass().getSimpleName());
   }
 
   public int numDependencies() {
